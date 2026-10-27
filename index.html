@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b5265">
+<title>שחיית חורף — בת גלים</title>
+<style>
+:root{--navy:#0b5265;--ink:#15323b;--muted:#607780;--bg:#f2f7f8;--card:#fff;--line:#d8e5e8;--green:#19734a;--amber:#96600b;--red:#a32929}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.45}
+header{background:linear-gradient(120deg,#0b5265,#167f8d);color:white;padding:24px 16px 20px}
+.wrap{max-width:900px;margin:auto}h1{font-size:1.55rem;margin:0 0 6px}header p{margin:0;opacity:.92}.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+main{padding:16px;max-width:900px;margin:auto}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+button,select{font:inherit;border:1px solid var(--line);border-radius:12px;padding:10px 13px;background:white;color:var(--ink)}button{cursor:pointer}button.primary{background:var(--navy);color:white;border-color:var(--navy)}
+#status{padding:15px;border-radius:16px;background:white;border:1px solid var(--line);margin-bottom:14px}
+.statushead{display:flex;align-items:center;gap:10px}.dot{width:13px;height:13px;border-radius:50%;background:#9aa}.green .dot{background:#21965f}.amber .dot{background:#d69a28}.red .dot{background:#c94444}
+h2{font-size:1.08rem;margin:0 0 10px}.statusname{font-size:1.2rem;font-weight:750}.small{font-size:.88rem;color:var(--muted)}.warning{background:#fff5df;border:1px solid #eed49a;border-radius:12px;padding:12px;margin-top:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metric{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:14px;min-width:0}.metric .label{color:var(--muted);font-size:.86rem}.metric .value{font-size:1.5rem;font-weight:750;margin:3px 0}.metric .sub{font-size:.82rem;color:var(--muted)}
+section{margin:16px 0}.hours{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.hour{background:white;border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}.hour strong{display:block;font-size:1rem}.hour span{display:block;font-size:.78rem;color:var(--muted);margin-top:3px}
+details{background:white;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0}summary{font-weight:700;cursor:pointer}.foot{font-size:.83rem;color:var(--muted);padding:6px 0 26px}a{color:#0b6578}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hours{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:360px){.hours{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="topline"><h1>🌊 שחיית חורף — בת גלים</h1><span id="updated" class="small" style="color:#e5f4f6">טוען נתונים…</span></div>
+<p>לוח תחזית אוטומטי לשחייה רגועה באזור שוברי הגלים והמצופים</p>
+</div></header>
+<main>
+<div class="toolbar">
+<button class="primary" id="refresh">↻ רענון נתונים</button>
+<label class="small" style="display:flex;align-items:center;gap:7px">שעת בדיקה:
+<select id="hourPick" aria-label="בחר שעה"></select></label>
+</div>
+<div id="status" class="amber"><div class="statushead"><span class="dot"></span><div><div class="small">הערכת נוחות לפי תחזית — לא אישור בטיחות</div><div id="statusname" class="statusname">טוען…</div></div></div><p id="reason" style="margin-bottom:0">מושך נתונים ממקורות התחזית.</p></div>
+<div class="grid" id="metrics">
+<div class="metric"><div class="label">רוח ממוצעת</div><div class="value">—</div></div>
+<div class="metric"><div class="label">משבי רוח</div><div class="value">—</div></div>
+<div class="metric"><div class="label">גובה גלים</div><div class="value">—</div></div>
+<div class="metric"><div class="label">מחזור גלים</div><div class="value">—</div></div>
+<div class="metric"><div class="label">טמפרטורת פני הים</div><div class="value">—</div></div>
+<div class="metric"><div class="label">זרם ימי מודלי</div><div class="value">—</div></div>
+</div>
+<section><h2>השעות הקרובות</h2><div id="hours" class="hours"><div class="hour">טוען…</div></div></section>
+<div class="warning"><strong>חשוב:</strong> התחזית אינה מזהה באופן אמין זרמים מקומיים ליד שוברי גלים ואינה מחליפה מציל. יש לבדוק אזהרות, מצב הים בפועל ושעות פעילות הצלה. רוח מזרחית/מהחוף, זרם חשוד, איסור רחצה או תנאים משתנים — סיבה לא להיכנס גם אם המספרים נראים טובים.</div>
+<details><summary>איך נקבעת ההערכה?</summary>
+<p>ספי העבודה שהועברו מהמסמך של מדריכת השחייה: רוח מועדפת 0–5 קשר; משבים מועדפים פחות מ־8 קשר; גלים מועדפים 0–30 ס״מ; מחזור מועדף 7 שניות ומעלה. במסמך צוין גם ששילוב של גלים 50–70 ס״מ, מחזור קצר סביב 4 שניות ורוח סביב 10 קשר הוא קופצני ולא מתאים למטרה של שחייה רגועה.</p>
+<p>הצבעים הם סינון לנוחות בלבד. הם אינם מוכיחים שהים בטוח. רוח חזקה מהחוף/מזרחית, זרם חשוד או אזהרה רשמית גוברים על כל ציון.</p>
+<p>הנתונים נמשכים מ־Open-Meteo Marine API ו־Open-Meteo Weather API, ברזולוציית מודל של קילומטרים ולא מדידה נקודתית בחוף. הטמפרטורה היא טמפרטורת פני הים, לא טמפרטורה בעומק.</p>
+</details>
+<div class="foot">מקורות: <a href="https://open-meteo.com/en/docs/marine-weather-api" target="_blank" rel="noopener">Open-Meteo Marine</a> · <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo Weather</a>. הנתונים כפופים לזמינות השירות ולתנאי השימוש/ייחוס המקור.</div>
+</main>
+<script>
+const LAT=32.831, LON=34.971;
+const $=id=>document.getElementById(id);
+let marine=null, weather=null, rows=[];
+function num(v,d=1){return Number.isFinite(v)?v.toFixed(d):"אין נתון"}
+function getAt(obj,key,i){return obj?.hourly?.[key]?.[i] ?? null}
+function knots(kmh){return Number.isFinite(kmh)?kmh/1.852:null}
+function dirName(d){if(!Number.isFinite(d))return "אין נתון";const names=["צפון","צפון־מזרח","מזרח","דרום־מזרח","דרום","דרום־מערב","מערב","צפון־מערב"];return names[Math.round(d/45)%8]}
+function localTime(s){return new Date(s).toLocaleTimeString("he-IL",{hour:"2-digit",minute:"2-digit"})}
+function grade(r){
+ let reasons=[], bad=false, caution=false;
+ const w=knots(r.wind), gust=knots(r.gust), h=r.height, p=r.period;
+ if(w===null||gust===null||h===null||p===null){return {level:"amber",name:"נתונים חלקיים",reason:"לא ניתן לסווג: חסרים נתוני תחזית מרכזיים. בדוק מקור נוסף ואל תניח שהתנאים נוחים."}}
+ if(w>=10){bad=true;reasons.push("רוח ממוצעת של 10 קשר ומעלה")}
+ else if(w>5){caution=true;reasons.push("רוח מעל 5 קשר")}
+ if(gust>=15){bad=true;reasons.push("משבים של 15 קשר ומעלה")}
+ else if(gust>=8){caution=true;reasons.push("משבים מעל הסף המועדף")}
+ if(h>=0.5){bad=true;reasons.push("גלים בגובה 50 ס״מ ומעלה")}
+ else if(h>0.3){caution=true;reasons.push("גלים מעל 30 ס״מ")}
+ if(p<5){bad=true;reasons.push("מחזור קצר מ־5 שניות")}
+ else if(p<7){caution=true;reasons.push("מחזור קצר מהסף המועדף")}
+ // Approximate wind direction: E through SE (45-135 degrees) is treated as potentially offshore at this coast.
+ if(Number.isFinite(r.windDir) && r.windDir>=45 && r.windDir<=135){bad=true;reasons.push("רוח מזרחית עד דרום־מזרחית — עלולה להרחיק מהחוף")}
+ if(bad)return {level:"red",name:"לא מומלץ לשחייה רגועה",reason:reasons.join(" · ")+". ההערכה אינה תחליף לבדיקת הים ואזהרות."};
+ if(caution)return {level:"amber",name:"תנאים גבוליים — לבדוק בזהירות",reason:reasons.join(" · ")+". בדוק את הים בפועל, תחזית לשעות השחייה והנחיות המציל."};
+ return {level:"green",name:"המדדים מתאימים יותר לשחייה רגועה",reason:"המדדים המספריים עומדים בספים המועדפים. זו אינה קביעה שהים בטוח: בדוק זרמים, אזהרות, אזור מותר לרחצה והאם ההגנה של שוברי הגלים מספקת."};
+}
+function render(){
+ const select=$("hourPick"); const idx=Number(select.value||0); const r=rows[idx]; if(!r)return;
+ const g=grade(r); $("status").className=g.level; $("statusname").textContent=g.name; $("reason").textContent=g.reason;
+ const w=knots(r.wind), gust=knots(r.gust);
+ const cards=[
+ ["רוח ממוצעת",w===null?"אין נתון":num(w)+" קשר",Number.isFinite(w)?num(w*1.852)+" קמ״ש":"מהירות בגובה 10 מ׳"],
+ ["משבי רוח",gust===null?"אין נתון":num(gust)+" קשר",Number.isFinite(gust)?num(gust*1.852)+" קמ״ש":"משבים חזויים"],
+ ["גובה גלים",r.height===null?"אין נתון":num(r.height*100,0)+" ס״מ","גובה גל משמעותי חזוי"],
+ ["מחזור גלים",r.period===null?"אין נתון":num(r.period,0)+" שנ׳","מחזור גלים ממוצע/דומיננטי לפי המודל"],
+ ["טמפרטורת פני הים",r.sst===null?"אין נתון":num(r.sst)+"°C","לא טמפרטורה בעומק"],
+ ["זרם ימי מודלי",r.current===null?"אין נתון":num(r.current)+" קמ״ש",Number.isFinite(r.currentDir)?"כיוון הזרם: "+dirName(r.currentDir):"המודל אינו מזהה זרמים מקומיים"]
+ ];
+ $("metrics").innerHTML=cards.map(c=>`<div class="metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join("");
+}
+async function load(){
+ $("refresh").disabled=true; $("updated").textContent="מעדכן…";
+ try{
+  const marineUrl=`https://marine-api.open-meteo.com/v1/marine?latitude=${LAT}&longitude=${LON}&hourly=wave_height,wave_period,wave_peak_period,sea_surface_temperature,ocean_current_velocity,ocean_current_direction&forecast_days=3&timezone=Asia%2FJerusalem`;
+  const weatherUrl=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&hourly=wind_speed_10m,wind_gusts_10m,wind_direction_10m&forecast_days=3&timezone=Asia%2FJerusalem&wind_speed_unit=kmh`;
+  const [m,w]=await Promise.all([fetch(marineUrl),fetch(weatherUrl)]);
+  if(!m.ok||!w.ok)throw new Error("שירות התחזית לא החזיר נתונים");
+  marine=await m.json(); weather=await w.json();
+  const times=marine.hourly.time; rows=times.map((t,i)=>{
+   const wi=weather.hourly.time.indexOf(t);
+   return {time:t,wind:getAt(weather,"wind_speed_10m",wi),gust:getAt(weather,"wind_gusts_10m",wi),windDir:getAt(weather,"wind_direction_10m",wi),height:getAt(marine,"wave_height",i),period:getAt(marine,"wave_peak_period",i)??getAt(marine,"wave_period",i),sst:getAt(marine,"sea_surface_temperature",i),current:getAt(marine,"ocean_current_velocity",i),currentDir:getAt(marine,"ocean_current_direction",i)};
+  });
+  const now=new Date(); let start=rows.findIndex(r=>new Date(r.time)>=now); if(start<0)start=0;
+  const sel=$("hourPick");sel.innerHTML=rows.slice(start,start+48).map((r,j)=>`<option value="${start+j}">${new Date(r.time).toLocaleDateString("he-IL",{weekday:"short",day:"2-digit",month:"2-digit"})} ${localTime(r.time)}</option>`).join("");
+  sel.value=String(start);render();
+  $("hours").innerHTML=rows.slice(start,start+6).map(r=>{const g=grade(r);return `<div class="hour"><span>${localTime(r.time)}</span><strong>${g.level==="green"?"🟢":g.level==="amber"?"🟠":"🔴"} ${r.height===null?"—":Math.round(r.height*100)+" ס״מ"}</strong><span>רוח ${r.wind===null?"—":Math.round(knots(r.wind))+" קשר"}</span><span>מחזור ${r.period===null?"—":Math.round(r.period)+" שנ׳"}</span></div>`}).join("");
+  $("updated").textContent="עודכן: "+new Date().toLocaleTimeString("he-IL",{hour:"2-digit",minute:"2-digit"});
+ }catch(e){$("updated").textContent="לא ניתן לטעון נתונים";$("status").className="amber";$("statusname").textContent="אין נתונים עדכניים";$("reason").textContent="בדוק חיבור לאינטרנט או נסה שוב. אין להסתמך על נתונים ישנים לצורך החלטה על כניסה לים.";$("hours").innerHTML='<div class="hour">תחזית לא זמינה</div>';}
+ finally{$("refresh").disabled=false}
+}
+$("refresh").addEventListener("click",load);$("hourPick").addEventListener("change",render);load();
+</script>
+</body>
+</html>
